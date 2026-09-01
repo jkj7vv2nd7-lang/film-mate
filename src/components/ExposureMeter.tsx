@@ -21,8 +21,8 @@ export default function ExposureMeter({ onEVChange }: { onEVChange?: (ev: number
     const ce = ev + comp;
     const ep = calculateExposurePairs(ce, iso);
     setPairs(ep);
-    const m = ep.find(p => Math.abs(p.diff) < 0.5);
-    if (m) { onEVChange?.(ce, m.aperture, m.shutterLabel, iso); }
+    const m = ep.find(p => Math.abs(p.evDiff) < 0.5);
+    if (m) { onEVChange?.(ce, m.fStop, m.shutterLabel, iso); }
   }, [comp, iso, onEVChange]);
 
   const startCam = useCallback(async () => {
@@ -145,11 +145,11 @@ export default function ExposureMeter({ onEVChange }: { onEVChange?: (ev: number
               <div className="bg-zinc-800 px-2 py-1 text-[10px] font-bold text-zinc-400">偏差</div>
               <div className="bg-zinc-800 px-2 py-1 text-[10px] font-bold text-zinc-400">EV</div>
               {pairs.map((p, i) => {
-                const ok = Math.abs(p.diff) < 0.5;
-                return [<div key={i+'a'} className={`${ok?'bg-amber-600/20':'bg-zinc-900'} px-2 py-1.5 text-xs font-bold ${ok?'text-amber-300':'text-zinc-300'}`}>f/{p.aperture}</div>,
+                const ok = Math.abs(p.evDiff) < 0.5;
+                return [<div key={i+'a'} className={`${ok?'bg-amber-600/20':'bg-zinc-900'} px-2 py-1.5 text-xs font-bold ${ok?'text-amber-300':'text-zinc-300'}`}>f/{p.fStop}</div>,
                 <div key={i+'b'} className={`${ok?'bg-amber-600/20':'bg-zinc-900'} px-2 py-1.5 text-xs ${ok?'text-amber-300':'text-zinc-300'}`}>{p.shutterLabel}</div>,
-                <div key={i+'c'} className={`${ok?'bg-amber-600/20':'bg-zinc-900'} px-2 py-1.5 text-[10px] ${ok?'text-green-400':'text-zinc-500'}`}>{p.diff===0?'◎':ok?'○':`${p.diff>0?'+':''}${p.diff}`}</div>,
-                <div key={i+'d'} className={`${ok?'bg-amber-600/20':'bg-zinc-900'} px-2 py-1.5 text-[10px] ${ok?'text-amber-300':'text-zinc-300'}`}>{calculateEV(p.aperture, p.shutterSpeed, iso)}</div>];
+                <div key={i+'c'} className={`${ok?'bg-amber-600/20':'bg-zinc-900'} px-2 py-1.5 text-[10px] ${ok?'text-green-400':'text-zinc-500'}`}>{p.evDiff===0?'◎':ok?'○':`${p.evDiff>0?'+':''}${p.evDiff}`}</div>,
+                <div key={i+'d'} className={`${ok?'bg-amber-600/20':'bg-zinc-900'} px-2 py-1.5 text-[10px] ${ok?'text-amber-300':'text-zinc-300'}`}>{calculateEV(p.fStop, p.shutterSpeed, iso)}</div>];
               })}
             </div>
           </div>
