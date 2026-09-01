@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Sun, Ruler } from 'lucide-react';
+import { Sun, Ruler, HelpCircle } from 'lucide-react';
 import ExposureMeter from '@/components/ExposureMeter';
 import DistanceMeter from '@/components/DistanceMeter';
 
@@ -16,6 +16,9 @@ export default function Home() {
           <h1 className="text-base font-bold text-zinc-100">Film Mate</h1>
           <p className="text-[10px] text-zinc-500">フィルムカメラ用 露出計 ＆ 距離計</p>
         </div>
+                <a href="/film-mate/manual" className="p-2 rounded-lg hover:bg-zinc-800 transition-colors">
+          <HelpCircle className="w-5 h-5 text-zinc-400" />
+        </a>
       </header>
       <div className="flex border-b border-zinc-800">
         <button onClick={() => setActiveTab('exposure')} className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-bold transition-colors ${activeTab === 'exposure' ? 'text-amber-400 border-b-2 border-amber-400' : 'text-zinc-500'}`}>
